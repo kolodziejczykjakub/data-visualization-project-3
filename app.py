@@ -1,18 +1,16 @@
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-from dash.dependencies import Input, Output
+from dash.dependencies import Input, Output, State
+import numpy as np
 
-from issues_with_3d import *
-
-encoded_image1, encoded_image2 = get_encoded_imgs()
-fig = get_3d_scatter_iris()
-fig1 = get_barplot_iris()
-
+from tab_3d_issues import tab_3d_issues_layout
+from issues_with_3d import iris_group
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
-
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+
+app.config['suppress_callback_exceptions'] = True
 
 
 app.layout = html.Div(children=[
@@ -35,11 +33,10 @@ app.layout = html.Div(children=[
 
 ])
 
+
 @app.callback(Output('tabs-content', 'children'),
               [Input('tabs', 'value')])
-
 def render_content(tab):
-
     if tab == 'tab-1':
         return html.Div([
             html.H4('Description'),
@@ -55,35 +52,7 @@ def render_content(tab):
         ])
 
     elif tab == 'tab-2':
-        return html.Div([
-            html.H3('Issues with third dimension on plots'),
-
-            html.Div([
-                html.Div([
-                    html.H4('Redundant third dimension on bar plot'),
-                    html.Img(src='data:image/png;base64,{}'.format(encoded_image1.decode())),
-                ], className="six columns"),
-
-                html.Div([
-                    html.H4('Better stick to two dimensions'),
-                    dcc.Graph(figure=fig1)
-                ], className="six columns"),
-            ], className="row"),
-
-            html.Div([
-                html.Div([
-                    html.H4('Column 1'),
-                    html.Img(src='data:image/png;base64,{}'.format(encoded_image2.decode())),
-                ], className="six columns"),
-
-                html.Div([
-                    html.H4('Column 2'),
-                    dcc.Graph(figure=fig)
-                ], className="six columns"),
-            ], className="row")
-
-
-        ])
+        return tab_3d_issues_layout
 
     elif tab == 'tab-3':
         return html.Div([
@@ -104,6 +73,22 @@ def render_content(tab):
         return html.Div([
             html.H3('Tab content 6')
         ])
+
+
+# tab with 3d issues callbacks:
+@app.callback(Output('output-pl-mae', 'children'),
+              [Input('submit-button-pl', 'n_clicks')],
+              [State('input-pl-set', 'value'),
+               State('input-pl-ver', 'value'),
+               State('input-pl-vir', 'value')],
+              )
+def update_output(n_clicks, input1, input2, input3):
+    input_values = np.asarray([input1, input2, input3]).astype(float)
+    MAE = np.sum(np.absolute(iris_group.loc[:, "petal_length"] - input_values))
+    return u'''
+        MAE error between entered and real values for mean petal lengths is {}
+    '''.format(MAE)
+
 
 
 if __name__ == '__main__':
