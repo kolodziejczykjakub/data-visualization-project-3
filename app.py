@@ -7,6 +7,8 @@ import numpy as np
 from tab_3d_issues import tab_3d_issues_layout
 from issues_with_3d import low_numbers_15_06_query_values
 
+import wrong_range
+import plotly.graph_objects as go
 
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
@@ -57,9 +59,7 @@ def render_content(tab):
         return tab_3d_issues_layout
 
     elif tab == 'tab-3':
-        return html.Div([
-            html.H3('Tab content 3')
-        ])
+        return wrong_range.wrong_range
 
     elif tab == 'tab-4':
         return html.Div([
@@ -105,6 +105,30 @@ def update_output(n_clicks, input1, input2, input3):
         return u'''
             Errors for Bahamas deaths: {}, Brunei confirmed cases: {}, Burma recovered: {}
         '''.format(MAE[0], MAE[1], MAE[2])
+
+
+# wrong range tab callback
+@app.callback(
+    Output('wrong_range_chart', 'figure'),
+    [Input('wrong_range_start_date', 'value'),
+     Input('wrong_range_end_date', 'value')]
+    )
+def update_scale(start, end):
+    col = 'deaths'
+    df_ = wrong_range.df.loc[start:end, :]
+    fig = go.Figure(go.Bar(
+        x=df_['week'],
+        y=df_[col]
+        ))
+    fig.update_yaxes(range=[0, wrong_range.df[col].max() + 100])
+    fig.update_layout(
+        height=500,
+        width=700,
+        title='Liczba zgonów na COVID w Polsce',
+        xaxis_title='Tydzień pandemii',
+        yaxis_title='Średnia liczba zgonów'
+        )
+    return fig
 
 
 if __name__ == '__main__':
