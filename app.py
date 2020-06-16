@@ -5,7 +5,9 @@ from dash.dependencies import Input, Output, State
 import numpy as np
 
 from tab_3d_issues import tab_3d_issues_layout
-from issues_with_3d import iris_group
+from issues_with_3d import low_numbers_15_06_query_values
+
+
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
@@ -76,19 +78,33 @@ def render_content(tab):
 
 
 # tab with 3d issues callbacks:
-@app.callback(Output('output-pl-mae', 'children'),
-              [Input('submit-button-pl', 'n_clicks')],
-              [State('input-pl-set', 'value'),
-               State('input-pl-ver', 'value'),
-               State('input-pl-vir', 'value')],
+@app.callback(Output('output_bar1', 'children'),
+              [Input('submit_button_bar1', 'n_clicks')],
+              [State('input_bar11', 'value'),
+               State('input_bar12', 'value'),
+               State('input_bar13', 'value')],
               )
 def update_output(n_clicks, input1, input2, input3):
     input_values = np.asarray([input1, input2, input3]).astype(float)
-    MAE = np.sum(np.absolute(iris_group.loc[:, "petal_length"] - input_values))
-    return u'''
-        MAE error between entered and real values for mean petal lengths is {}
-    '''.format(MAE)
+    MAE = low_numbers_15_06_query_values - input_values
+    if n_clicks > 0:
+        return u'''
+            Errors for Bahamas deaths: {}, Brunei confirmed: {}, Burma recovered: {}
+        '''.format(MAE[0], MAE[1], MAE[2])
 
+@app.callback(Output('output_bar2', 'children'),
+              [Input('submit_button_bar2', 'n_clicks')],
+              [State('input_bar21', 'value'),
+               State('input_bar22', 'value'),
+               State('input_bar23', 'value')],
+              )
+def update_output(n_clicks, input1, input2, input3):
+    input_values = np.asarray([input1, input2, input3]).astype(float)
+    MAE = low_numbers_15_06_query_values - input_values
+    if n_clicks > 0:
+        return u'''
+            Errors for Bahamas deaths: {}, Brunei confirmed: {}, Burma recovered: {}
+        '''.format(MAE[0], MAE[1], MAE[2])
 
 
 if __name__ == '__main__':
