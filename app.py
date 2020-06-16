@@ -89,7 +89,7 @@ def update_output(n_clicks, input1, input2, input3):
     MAE = low_numbers_15_06_query_values - input_values
     if n_clicks > 0:
         return u'''
-            Errors for Bahamas deaths: {}, Brunei confirmed: {}, Burma recovered: {}
+            Errors for Bahamas deaths: {}, Brunei confirmed cases: {}, Burma recovered: {}
         '''.format(MAE[0], MAE[1], MAE[2])
 
 @app.callback(Output('output_bar2', 'children'),
@@ -103,7 +103,7 @@ def update_output(n_clicks, input1, input2, input3):
     MAE = low_numbers_15_06_query_values - input_values
     if n_clicks > 0:
         return u'''
-            Errors for Bahamas deaths: {}, Brunei confirmed: {}, Burma recovered: {}
+            Errors for Bahamas deaths: {}, Brunei confirmed cases: {}, Burma recovered: {}
         '''.format(MAE[0], MAE[1], MAE[2])
 
 

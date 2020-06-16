@@ -11,13 +11,27 @@ fig1 = get_barplot_iris()
 fig2 = get_barplot_low_numbers_15_06()
 
 tab_3d_issues_layout = html.Div([
-            html.H3('Issues with third dimension on bar plots'),
+            html.Div([
+                html.Div([
+                    html.H3('Issues with third dimension on bar plots'),
+                ], className="six columns"),
+
+                html.Div([
+                    html.H4('Most annoying issues:'),
+                    dcc.Markdown('''
+                    * It is difficult to find the exact values on the bar.
+                    * Bars in the back may be hidden.
+                    * Bars in the back appear smaller than they really are.
+                    '''),
+                ], className="six columns"),
+
+            ], className="row"),
 
             html.Div([
                 html.Div([
                     html.H4('Redundant third dimension on the bar plot'),
                     html.Img(src='data:image/png;base64,{}'.format(encoded_image1.decode()),
-                             style={'height':'90%', 'width':'90%'}),
+                             style={'height':'80%', 'width':'80%'}),
                     # dcc.Graph(figure=fig3)
                 ], className="six columns"),
 
@@ -32,7 +46,7 @@ tab_3d_issues_layout = html.Div([
             html.Div([
                 html.Div([
                     html.H4('Write your estimated values for the first plot:'),
-                    dcc.Markdown("Values for Bahamas deaths, Brunei confirmed Burma recovered :"),
+                    dcc.Markdown("Enter values for Bahamas deaths, Brunei confirmed cases and Burma recovered :"),
                     dcc.Input(id='input_bar11', type='number', value='0', size='10'),
                     dcc.Input(id='input_bar12', type='number', value='0', size='10'),
                     dcc.Input(id='input_bar13', type='number', value='0', size='10'),
@@ -42,7 +56,7 @@ tab_3d_issues_layout = html.Div([
 
                 html.Div([
                     html.H4('Write your estimated values for the second plot:'),
-                    dcc.Markdown("Values for Bahamas deaths, Brunei confirmed Burma recovered :"),
+                    dcc.Markdown("Enter values for Bahamas deaths, Brunei confirmed cases and Burma recovered :"),
                     dcc.Input(id='input_bar21', type='number', value='0', size='10'),
                     dcc.Input(id='input_bar22', type='number', value='0', size='10'),
                     dcc.Input(id='input_bar23', type='number', value='0', size='10'),
