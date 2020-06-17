@@ -14,30 +14,27 @@ def get_bubbles_tab():
         ], className="row"),
 
         html.Div([
-            html.Div([
-                dcc.Graph(figure=get_bubbles(correct=False)),
-                html.H4('Podaj szacunkową wartość'),
-                dcc.Markdown("Ile razy więcej zgonów jest w Indiach niż w Chile?"),
-                dcc.Input(id='bubbles-input', type='number', value='0', size='10'),
-                html.Button(id='bubbles-submit', n_clicks=0, children='Sprawdź'),
-            ], className="six columns"),
+            dcc.Graph(figure=get_bubbles(correct=False)),
+            html.H4('Podaj szacunkową wartość'),
+            dcc.Markdown("Ile razy więcej zgonów jest w Indiach niż w Chile?"),
+            dcc.Input(id='bubbles-input', type='number', value='0', size='10'),
+            html.Button(id='bubbles-submit', n_clicks=0, children='Sprawdź'),
+        ], className="row"),
 
-            html.Div([
-                dcc.Graph(id="good-bubbles-chart"),
-                dcc.Markdown(id="bubbles-answer"),
-                dcc.Markdown(
-                    """
-                    Tak wygląda prawidłowy wykres. W rzeczywistości odpowiedź na postawione pytanie wynosi około 2.86.
-                    Błąd, jaki został popełniony po lewej stronie, to ustalenie promienia bąbelka jako wprost
-                    proporcjonalnego do prezentowanej wielkości. Tymczasem w sytuacji, gdy przyglądamy się różnym
-                    bąbelkom, większe znaczenie ma powierchnia, jaką zajmuje każdy z nich.
-                    """,
-                    style={'text-align': 'justify'}
-                ),
-            ], className="six columns", id="good-bubbles", style={'display': 'none'})
-        ], className="row", style={'text-align': 'center'})
-    ],
-            style={'marginLeft': 400, 'marginRight': 400, 'marginTop': 100, 'marginBottom': 10})
+        html.Div([
+            dcc.Graph(id="good-bubbles-chart"),
+            dcc.Markdown(id="bubbles-answer"),
+            dcc.Markdown(
+                """
+                Tak wygląda prawidłowy wykres. W rzeczywistości odpowiedź na postawione pytanie wynosi około 2.86.
+                Błąd, jaki został popełniony przy pierwszej figurze, to ustalenie promienia bąbelka jako wprost
+                proporcjonalnego do prezentowanej wielkości. Tymczasem w sytuacji, gdy przyglądamy się różnym
+                bąbelkom, większe znaczenie ma powierchnia, jaką zajmuje każdy z nich.
+                """,
+                style={'text-align': 'justify'}
+            ),
+        ], className="row", id="good-bubbles", style={'display': 'none'})
+    ], style={'text-align': 'center', 'marginLeft': 400, 'marginRight': 400, 'marginTop': 10, 'marginBottom': 10})
 
 
 def register_callbacks(app):
