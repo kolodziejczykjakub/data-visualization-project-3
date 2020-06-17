@@ -22,10 +22,10 @@ app.layout = html.Div(children=[
 
     dcc.Tabs(id='tabs', value='tab-1', children=[
         dcc.Tab(label='O aplikacji', value='tab-1'),
-        dcc.Tab(label='Tab 2', value='tab-2'),
-        dcc.Tab(label='Tab 3', value='tab-3'),
+        dcc.Tab(label='Wykresy słupkowe', value='tab-2'),
+        dcc.Tab(label='Zakres osi', value='tab-3'),
         dcc.Tab(label='Mapy', value='tab-4'),
-        dcc.Tab(label='Tab 5', value='tab-5'),
+        dcc.Tab(label='Wykresy bąbelkowe', value='tab-5'),
         dcc.Tab(label='Wykresy kołowe', value='tab-6'),
     ]),
 
@@ -41,7 +41,7 @@ app.layout = html.Div(children=[
 def render_content(tab):
     if tab == 'tab-1':
         return html.Div([
-            html.H4('Opis aplikacji'),
+            html.H3('Opis aplikacji'),
             html.P('Aplikacja ma za zadanie prezentować typowe błędy wizualizacyjne popełniane przy pokazywaniu stanu epidemiologicznego w Polsce i na świecie.'
                    +' Błędy takie mogą powodować niezrozumienie zbieranych statystyk, a także mogą być stosowane do zwiększania paniki wśród ludzi.'
                     +' Warto zatem znać je i wykrywać, aby nie ulec manipulacji osób tworzących takie wizualizacje.'),
@@ -52,8 +52,10 @@ def render_content(tab):
             html.Li('Damian Kryński'),
             html.Li('Franciszek Grymuła'),
             html.Li('Kamil Ruta'),
+            html.P("\n"),
             html.A('Repozytorium', href='https://github.com/jakubkala/data-visualization-project-3')
-        ])
+        ],
+            style={'marginLeft': 400, 'marginRight': 400, 'marginTop': 100, 'marginBottom': 10})
 
     elif tab == 'tab-2':
         return tab_3d_issues_layout
@@ -149,4 +151,4 @@ def display_description(n):
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=False)

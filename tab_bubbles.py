@@ -36,7 +36,8 @@ def get_bubbles_tab():
                 ),
             ], className="six columns", id="good-bubbles", style={'display': 'none'})
         ], className="row", style={'text-align': 'center'})
-    ])
+    ],
+            style={'marginLeft': 400, 'marginRight': 400, 'marginTop': 100, 'marginBottom': 10})
 
 
 def register_callbacks(app):

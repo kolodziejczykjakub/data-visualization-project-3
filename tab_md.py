@@ -60,7 +60,7 @@ def get_piechart_tab():
     return html.Div([
         html.Div([
             html.Div([
-                html.H2('Niepoprawne użycie piechartów i nie wyświetlenie wartości procentowych', style={'text-align': 'center', "margin": '2em'}),
+                html.H2('Niepoprawne użycie piechartów i niewyświetlenie wartości procentowych', style={'text-align': 'center', "margin": '2em'}),
             ]),
         ], className="row"),
 

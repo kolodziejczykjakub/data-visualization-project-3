@@ -87,4 +87,5 @@ tab_3d_issues_layout = html.Div([
                 ], className="twelve columns"),
 
             ], className="row")
-        ])
+        ],
+            style={'marginLeft': 200, 'marginRight': 200, 'marginTop': 100, 'marginBottom': 10})

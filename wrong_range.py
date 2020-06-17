@@ -9,7 +9,7 @@ import numpy as np
 
 def to_week(x):
     y = -np.flip(x // 7, 0)
-    y = y + np.abs(np.min(y))
+    y = y + np.abs(y.min())
     return y
 
 
@@ -29,6 +29,11 @@ numdate = [ x for x in range(len(df['week'].unique())) ]
 
 
 wrong_range = html.Div([
+    html.H4("Zakres osi"),
+    html.P("Manipulacja zakresem danych, zarówno na osi odciętych jak i rzędnych może prowadzić do błędnej interpretacji danej wizualizacji."),
+    html.P("W tym przypadku, wykres pozwala obronić zarówno hipotezę o rozwoju pandemii jak i wypłaszczaniu krzywej zachorowań."),
+    html.Div(
+        dcc.Graph(id='wrong_range_chart')),
     html.Div([
         html.Label('Wybierz początek osi X'),
         dcc.Slider(
@@ -37,7 +42,7 @@ wrong_range = html.Div([
             max=numdate[-1],
             step=1,
             value=numdate[-5],
-            ),
+        ),
         html.Label('Wybierz koniec osi X'),
         dcc.Slider(
             id='wrong_range_end_date',
@@ -45,9 +50,7 @@ wrong_range = html.Div([
             max=numdate[-1],
             step=1,
             value=numdate[-1],
-            )
-        ]),
-    html.Div(
-        dcc.Graph(id='wrong_range_chart'))
-    ], style={'width': '49%'})
+        )
+    ])
+    ], style={'marginLeft': 450, 'marginRight': 300, 'marginTop': 100, 'marginBottom': 10, 'width': '49%'})
 
