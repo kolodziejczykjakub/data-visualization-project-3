@@ -20,17 +20,13 @@ app.config['suppress_callback_exceptions'] = True
 app.layout = html.Div(children=[
     html.H1(children='Błędy wizualizacyjne zaciemniające Pandemię', style={"text-align":'center'}),
 
-    html.Div(children='''
-        Lorem impsum...
-    '''),
-
     dcc.Tabs(id='tabs', value='tab-1', children=[
         dcc.Tab(label='O aplikacji', value='tab-1'),
         dcc.Tab(label='Tab 2', value='tab-2'),
         dcc.Tab(label='Tab 3', value='tab-3'),
         dcc.Tab(label='Mapy', value='tab-4'),
         dcc.Tab(label='Tab 5', value='tab-5'),
-        dcc.Tab(label='Tab 6', value='tab-6'),
+        dcc.Tab(label='Wykresy kołowe', value='tab-6'),
     ]),
 
     html.Div(id='tabs-content')
