@@ -3,11 +3,12 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output, State
 import numpy as np
-
 from tab_3d_issues import tab_3d_issues_layout
 from issues_with_3d import low_numbers_15_06_query_values
-
-
+import wrong_range
+import plotly.graph_objects as go
+import covid_map
+import tab_bubbles
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
@@ -36,6 +37,20 @@ app.layout = html.Div(children=[
 ])
 
 
+
+@app.callback(Output("image", "children"),
+              [Input('correctness_level_slider', 'value')])
+def display_image(n):
+    return html.Img(src=app.get_asset_url(f"map_{n}.png"),
+                    style={'text-align':'center'})
+
+
+@app.callback(Output('image_description', 'children'),
+              [Input('correctness_level_slider', 'value')])
+def display_description(n):
+    return html.Label(covid_map.levels_description_dictionary[n], style={'text-align': "center"})
+
+
 @app.callback(Output('tabs-content', 'children'),
               [Input('tabs', 'value')])
 def render_content(tab):
@@ -57,19 +72,13 @@ def render_content(tab):
         return tab_3d_issues_layout
 
     elif tab == 'tab-3':
-        return html.Div([
-            html.H3('Tab content 3')
-        ])
+        return wrong_range.wrong_range
 
     elif tab == 'tab-4':
-        return html.Div([
-            html.H3('Tab content 4')
-        ])
+        return covid_map.covid_map
 
     elif tab == 'tab-5':
-        return html.Div([
-            html.H3('Tab content 5')
-        ])
+        return tab_bubbles.get_bubbles_tab()
 
     elif tab == 'tab-6':
         return html.Div([
@@ -105,6 +114,33 @@ def update_output(n_clicks, input1, input2, input3):
         return u'''
             Errors for Bahamas deaths: {}, Brunei confirmed cases: {}, Burma recovered: {}
         '''.format(MAE[0], MAE[1], MAE[2])
+
+
+# wrong range tab callback
+@app.callback(
+    Output('wrong_range_chart', 'figure'),
+    [Input('wrong_range_start_date', 'value'),
+     Input('wrong_range_end_date', 'value')]
+    )
+def update_scale(start, end):
+    col = 'deaths'
+    df_ = wrong_range.df.loc[start:end, :]
+    fig = go.Figure(go.Bar(
+        x=df_['week'],
+        y=df_[col]
+        ))
+    fig.update_yaxes(range=[0, wrong_range.df[col].max() + 100])
+    fig.update_layout(
+        height=500,
+        width=700,
+        title='Liczba zgonów na COVID w Polsce',
+        xaxis_title='Tydzień pandemii',
+        yaxis_title='Średnia liczba zgonów'
+        )
+    return fig
+
+
+tab_bubbles.register_callbacks(app)
 
 
 if __name__ == '__main__':
