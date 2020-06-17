@@ -9,6 +9,7 @@ import wrong_range
 import plotly.graph_objects as go
 import covid_map
 import tab_bubbles
+import tab_md
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
@@ -81,9 +82,7 @@ def render_content(tab):
         return tab_bubbles.get_bubbles_tab()
 
     elif tab == 'tab-6':
-        return html.Div([
-            html.H3('Tab content 6')
-        ])
+        return tab_md.get_piechart_tab()
 
 
 # tab with 3d issues callbacks:
@@ -141,6 +140,7 @@ def update_scale(start, end):
 
 
 tab_bubbles.register_callbacks(app)
+tab_md.register_callbacks(app)
 
 
 if __name__ == '__main__':

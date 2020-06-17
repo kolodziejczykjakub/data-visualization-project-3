@@ -22,9 +22,9 @@ def encode_img(image_filename):
 
 
 def get_encoded_imgs():
-    encoded_image1 = encode_img(r'figures\3d_bar_chart_covid.PNG')
-    encoded_image2 = encode_img(r'figures\iris_3d_plot2.PNG')
-    encoded_image3 = encode_img(r'figures\bar_chart_covid.PNG')
+    encoded_image1 = encode_img(r'figures/3d_bar_chart_covid.PNG')
+    encoded_image2 = encode_img(r'figures/iris_3d_plot2.PNG')
+    encoded_image3 = encode_img(r'figures/bar_chart_covid.PNG')
 
     return encoded_image1, encoded_image2, encoded_image3
 
