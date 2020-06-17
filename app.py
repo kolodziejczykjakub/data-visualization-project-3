@@ -17,17 +17,17 @@ app.config['suppress_callback_exceptions'] = True
 
 
 app.layout = html.Div(children=[
-    html.H1(children='Title'),
+    html.H1(children='Błędy wizualizacyjne zaciemniające Pandemię', style={"text-align":'center'}),
 
     html.Div(children='''
         Lorem impsum...
     '''),
 
     dcc.Tabs(id='tabs', value='tab-1', children=[
-        dcc.Tab(label='Tab 1', value='tab-1'),
+        dcc.Tab(label='O aplikacji', value='tab-1'),
         dcc.Tab(label='Tab 2', value='tab-2'),
         dcc.Tab(label='Tab 3', value='tab-3'),
-        dcc.Tab(label='Tab 4', value='tab-4'),
+        dcc.Tab(label='Mapy', value='tab-4'),
         dcc.Tab(label='Tab 5', value='tab-5'),
         dcc.Tab(label='Tab 6', value='tab-6'),
     ]),
@@ -38,26 +38,16 @@ app.layout = html.Div(children=[
 
 
 
-@app.callback(Output("image", "children"),
-              [Input('correctness_level_slider', 'value')])
-def display_image(n):
-    return html.Img(src=app.get_asset_url(f"map_{n}.png"),
-                    style={'text-align':'center'})
-
-
-@app.callback(Output('image_description', 'children'),
-              [Input('correctness_level_slider', 'value')])
-def display_description(n):
-    return html.Label(covid_map.levels_description_dictionary[n], style={'text-align': "center"})
-
 
 @app.callback(Output('tabs-content', 'children'),
               [Input('tabs', 'value')])
 def render_content(tab):
     if tab == 'tab-1':
         return html.Div([
-            html.H4('Description'),
-            html.P('Opis aplikacji...'),
+            html.H4('Opis aplikacji'),
+            html.P('Aplikacja ma za zadanie prezentować typowe błędy wizualizacyjne popełniane przy pokazywaniu stanu epidemiologicznego w Polsce i na świecie.'
+                   +' Błędy takie mogą powodować niezrozumienie zbieranych statystyk, a także mogą być stosowane do zwiększania paniki wśród ludzi.'
+                    +' Warto zatem znać je i wykrywać, aby nie ulec manipulacji osób tworzących takie wizualizacje.'),
             html.H4('Autorzy'),
             html.Li('Michał Bortkiewicz'),
             html.Li('Michał Dyczko'),
@@ -141,6 +131,25 @@ def update_scale(start, end):
 
 
 tab_bubbles.register_callbacks(app)
+
+
+# covid_map callbacks
+@app.callback(Output("image", "children"),
+              [Input('correctness_level_slider', 'value')])
+def display_image(n):
+    return html.Img(src=app.get_asset_url(f"map_{n}.png"),
+                    style={'text-align':'center'})
+
+
+@app.callback(Output('image_description', 'children'),
+              [Input('correctness_level_slider', 'value')])
+def display_description(n):
+    return html.Label(covid_map.levels_description_dictionary[n], style={'text-align': "center"})
+
+
+
+
+
 
 
 if __name__ == '__main__':
