@@ -8,7 +8,7 @@ df = px.data.iris()
 iris_group = df.groupby(by="species", ).mean()
 
 
-covid = pd.read_csv("data/covid_cases.csv")
+covid = pd.read_csv(r"data/covid_cases.csv")
 low_numbers = covid[(covid['confirmed']>100) & (covid['confirmed']<500)]
 low_numbers_15_06 = low_numbers[low_numbers['date'] == "2020-06-15"].iloc[:5, :]
 
