@@ -3,10 +3,11 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
 
+import covid_map
+
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
-
 
 app.layout = html.Div(children=[
     html.H1(children='Title'),
@@ -28,11 +29,23 @@ app.layout = html.Div(children=[
 
 ])
 
+
+@app.callback(Output("image", "children"),
+              [Input('correctness_level_slider', 'value')])
+def display_image(n):
+    return html.Img(src=app.get_asset_url(f"map_{n}.png"),
+                    style={'text-align':'center'})
+
+
+@app.callback(Output('image_description', 'children'),
+              [Input('correctness_level_slider', 'value')])
+def display_description(n):
+    return html.Label(covid_map.levels_description_dictionary[n], style={'text-align': "center"})
+
+
 @app.callback(Output('tabs-content', 'children'),
               [Input('tabs', 'value')])
-
 def render_content(tab):
-
     if tab == 'tab-1':
         return html.Div([
             html.H4('Description'),
@@ -58,9 +71,7 @@ def render_content(tab):
         ])
 
     elif tab == 'tab-4':
-        return html.Div([
-            html.H3('Tab content 4')
-        ])
+        return covid_map.covid_map
 
     elif tab == 'tab-5':
         return html.Div([
