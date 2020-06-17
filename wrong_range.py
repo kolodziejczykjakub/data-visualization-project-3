@@ -30,7 +30,7 @@ numdate = [ x for x in range(len(df['week'].unique())) ]
 
 wrong_range = html.Div([
     html.Div([
-        html.Label('Wybierz początek osi Y'),
+        html.Label('Wybierz początek osi X'),
         dcc.Slider(
             id='wrong_range_start_date',
             min=numdate[0],
@@ -38,7 +38,7 @@ wrong_range = html.Div([
             step=1,
             value=numdate[-5],
             ),
-        html.Label('Wybierz koniec osi Y'),
+        html.Label('Wybierz koniec osi X'),
         dcc.Slider(
             id='wrong_range_end_date',
             min=numdate[0],
