@@ -8,6 +8,7 @@ from issues_with_3d import low_numbers_15_06_query_values
 import wrong_range
 import plotly.graph_objects as go
 import covid_map
+import tab_bubbles
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
@@ -77,9 +78,7 @@ def render_content(tab):
         return covid_map.covid_map
 
     elif tab == 'tab-5':
-        return html.Div([
-            html.H3('Tab content 5')
-        ])
+        return tab_bubbles.get_bubbles_tab()
 
     elif tab == 'tab-6':
         return html.Div([
@@ -139,6 +138,9 @@ def update_scale(start, end):
         yaxis_title='Średnia liczba zgonów'
         )
     return fig
+
+
+tab_bubbles.register_callbacks(app)
 
 
 if __name__ == '__main__':
