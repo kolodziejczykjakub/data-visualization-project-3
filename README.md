@@ -8,3 +8,6 @@ Project for Python for Data Visualisation course (summer semester 2019/2020) at 
 ```
 python3 app.py
 ```
+
+### Installing geopandas on windows (10 min.)
+https://geoffboeing.com/2014/09/using-geopandas-windows/
